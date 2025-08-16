@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guess the Number</title>
+<style>
+    body {
+        background: linear-gradient(135deg, #0f0f0f, #1b1b1b);
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+    }
+    .container {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    h1 {
+        font-size: 2em;
+        color: cyan;
+        text-shadow: 0 0 10px cyan, 0 0 20px cyan;
+    }
+    input {
+        padding: 10px;
+        width: 60px;
+        text-align: center;
+        font-size: 1.2em;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        margin: 10px 0;
+        background: rgba(255,255,255,0.1);
+        color: white;
+    }
+    button {
+        background: linear-gradient(90deg, cyan, #ff00ff);
+        border: none;
+        padding: 10px 25px;
+        font-size: 1em;
+        font-weight: bold;
+        color: white;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px cyan, 0 0 25px #ff00ff;
+    }
+    .result {
+        font-size: 1.5em;
+        margin-top: 20px;
+        text-shadow: 0 0 5px white;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Guess the Number</h1>
+    <p>Enter a number between 1 and 100</p>
+    <input type="number" id="userGuess" min="1" max="100">
+    <br>
+    <button onclick="checkGuess()">Check</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    // Predefined number (you can change this)
+    const predefinedNumber = 50;
+
+    function checkGuess() {
+        let guess = parseInt(document.getElementById("userGuess").value);
+        let result = document.getElementById("result");
+
+        if (isNaN(guess)) {
+            result.textContent = "Please enter a valid number!";
+            result.style.color = "orange";
+            return;
+        }
+
+        if (guess < predefinedNumber) {
+            result.textContent = "Too Low";
+            result.style.color = "cyan";
+        } else if (guess > predefinedNumber) {
+            result.textContent = "Too High";
+            result.style.color = "magenta";
+        } else {
+            result.textContent = "Correct!";
+            result.style.color = "lime";
+        }
+    }
+</script>
+
+</body>
+</html>

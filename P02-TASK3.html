@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guess the Number - Futuristic Hologram</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    body {
+        background: #000;
+        font-family: 'Share Tech Mono', monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #00eaff;
+        overflow: hidden;
+    }
+
+    /* Hologram grid background */
+    body::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(90deg, rgba(0,234,255,0.1) 1px, transparent 1px),
+            linear-gradient(rgba(0,234,255,0.1) 1px, transparent 1px);
+        background-size: 40px 40px;
+        z-index: -2;
+    }
+
+    /* Scanline effect */
+    body::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            transparent,
+            transparent 2px,
+            rgba(0,234,255,0.05) 3px
+        );
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .card {
+        background: rgba(0, 20, 30, 0.8);
+        padding: 40px;
+        border-radius: 15px;
+        border: 2px solid #00eaff;
+        box-shadow: 0 0 20px #00eaff, inset 0 0 10px rgba(0,234,255,0.5);
+        text-align: center;
+        width: 320px;
+        animation: glowPulse 2s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+        from { box-shadow: 0 0 15px #00eaff, inset 0 0 10px rgba(0,234,255,0.5); }
+        to { box-shadow: 0 0 30px #00eaff, inset 0 0 20px rgba(0,234,255,0.7); }
+    }
+
+    h1 {
+        font-size: 1.4em;
+        text-shadow: 0 0 5px #00eaff, 0 0 15px #00eaff;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 0.9em;
+        color: #7ffcff;
+        margin-bottom: 10px;
+    }
+
+    input {
+        margin-top: 15px;
+        padding: 10px;
+        width: 80px;
+        border-radius: 5px;
+        border: 2px solid #00eaff;
+        font-size: 1em;
+        text-align: center;
+        outline: none;
+        background: rgba(0, 40, 50, 0.7);
+        color: #00eaff;
+        box-shadow: 0 0 10px #00eaff;
+    }
+
+    button {
+        margin-top: 15px;
+        background: linear-gradient(90deg, #00eaff, #007bff);
+        color: #001014;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 0 15px #00eaff;
+    }
+
+    button:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 25px #00eaff, 0 0 35px #007bff;
+    }
+
+    .result {
+        font-size: 1em;
+        margin-top: 20px;
+        font-weight: bold;
+        min-height: 20px;
+        text-shadow: 0 0 10px #00eaff, 0 0 20px #007bff;
+    }
+
+    .low { color: #ff5c5c; text-shadow: 0 0 10px #ff5c5c; }
+    .high { color: #ffb84d; text-shadow: 0 0 10px #ffb84d; }
+
+    /* Correct animation with glitch/flicker */
+    .correct {
+        color: #00ff9d;
+        text-shadow: 0 0 10px #00ff9d, 0 0 20px #00eaff;
+        animation: hologramGlitch 1.5s ease-in-out forwards;
+    }
+
+    @keyframes hologramGlitch {
+        0% { opacity: 0.9; transform: translateX(0); filter: hue-rotate(0deg); }
+        10% { opacity: 0.5; transform: translateX(-2px); filter: hue-rotate(90deg); }
+        20% { opacity: 1; transform: translateX(2px); filter: hue-rotate(180deg); }
+        30% { opacity: 0.7; transform: translateX(-1px); filter: hue-rotate(90deg); }
+        40% { opacity: 1; transform: translateX(1px); filter: hue-rotate(0deg); }
+        50% { opacity: 0.8; transform: translateX(0); }
+        60% { opacity: 1; transform: translateX(0); }
+        100% { opacity: 1; transform: translateX(0); }
+    }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h1>🔷 Hologram Number Guess 🔷</h1>
+    <p>Enter a number between 1 and 100</p>
+    <input type="number" id="userGuess" min="1" max="100" placeholder="?">
+    <br>
+    <button onclick="checkGuess()">SCAN</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    let predefinedNumber = Math.floor(Math.random() * 100) + 1;
+    console.log("Secret Number:", predefinedNumber); // Debug
+
+    function checkGuess() {
+        let guess = parseInt(document.getElementById("userGuess").value);
+        let result = document.getElementById("result");
+
+        if (isNaN(guess)) {
+            result.textContent = "Please enter a valid number";
+            result.className = "result";
+            return;
+        }
+
+        if (guess < predefinedNumber) {
+            result.textContent = "Too Low";
+            result.className = "result low";
+        } else if (guess > predefinedNumber) {
+            result.textContent = "Too High";
+            result.className = "result high";
+        } else {
+            result.textContent = "Correct!";
+            result.className = "result correct";
+
+            // Wait a bit and start a new round
+            setTimeout(() => {
+                predefinedNumber = Math.floor(Math.random() * 100) + 1;
+                console.log("New Secret Number:", predefinedNumber); // Debug
+                result.textContent = "🔄 New code generated! Keep guessing...";
+                result.className = "result";
+                document.getElementById("userGuess").value = "";
+            }, 2000);
+        }
+    }
+</script>
+
+</body>
+</html>
