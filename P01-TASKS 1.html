@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition & Subtraction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <style>
+        /* Background */
+/* Background with animated gradient */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(270deg, #ff7675, #74b9ff, #55efc4, #ffeaa7);
+    background-size: 800% 800%;
+    animation: gradientShift 10s ease infinite;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Split layout */
+.split-container {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    width: 800px;
+    height: 400px;
+}
+
+/* Input section */
+.input-section {
+    flex: 1;
+    padding: 30px;
+    color: #fff;
+}
+
+.input-section h1 {
+    margin-bottom: 10px;
+}
+
+.input-section input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    font-size: 16px;
+}
+
+.input-section button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #2d3436;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.input-section button:hover {
+    background: #636e72;
+}
+
+/* Result section - flip card */
+.result-section {
+    flex: 1;
+    perspective: 1000px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+.result-section.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-front {
+    color: white;
+}
+
+.card-back {
+    background: rgba(255,255,255,0.2);
+    transform: rotateY(180deg);
+    font-size: 18px;
+    color: #2d3436;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Animated gradient background */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+    </style>
+
+
+    <div class="split-container">
+        <div class="input-section">
+            <h1>🎯 Fun Math</h1>
+            <p>Enter two numbers and let’s do the magic!</p>
+
+            <input type="number" id="num1" placeholder="First Number">
+            <input type="number" id="num2" placeholder="Second Number">
+            
+            <button onclick="calculate()">Show Results</button>
+        </div>
+
+        <div class="result-section" id="result-card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>📊 Results</h2>
+                    <p>Click the button to see</p>
+                </div>
+                <div class="card-back" id="output">
+                    <!-- Results will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       function calculate() {
+    let num1 = parseFloat(document.getElementById("num1").value);
+    let num2 = parseFloat(document.getElementById("num2").value);
+    let outputDiv = document.getElementById("output");
+    let resultCard = document.getElementById("result-card");
+
+    if (isNaN(num1) || isNaN(num2)) {
+        outputDiv.innerHTML = "<p style='color:red;'>⚠ Please enter valid numbers!</p>";
+        resultCard.classList.add("flipped");
+        return;
+    }
+
+    let addition = num1 + num2;
+    let subtraction = num1 - num2;
+
+    outputDiv.innerHTML = `
+        <h3>✅ Results</h3>
+        <p>${num1} + ${num2} = <strong>${addition}</strong></p>
+        <p>${num1} - ${num2} = <strong>${subtraction}</strong></p>
+    `;
+
+    resultCard.classList.add("flipped");
+}
+
+
+    </script>
+</body>
+</html>

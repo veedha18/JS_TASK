@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Glass Calculator</title>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+    .container {
+        backdrop-filter: blur(15px);
+        background: rgba(255,255,255,0.05);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,255,255,0.3);
+        text-align: center;
+        width: 350px;
+        border: 1px solid rgba(255,255,255,0.2);
+        animation: fadeIn 1s ease-in-out;
+    }
+    h2 {
+        color: #00f7ff;
+        text-shadow: 0 0 10px #00f7ff;
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #fff;
+        font-weight: bold;
+    }
+    input {
+        width: 90%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+    }
+    button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        background: #00f7ff;
+        color: black;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+        transition: transform 0.2s ease, background 0.3s;
+    }
+    button:hover {
+        transform: scale(1.05);
+        background: #00c2cc;
+    }
+    .output-box {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        background: rgba(0,0,0,0.4);
+        color: #fff;
+        font-weight: bold;
+        text-align: left;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+    .visible {
+        opacity: 1;
+    }
+    .mul { color: #9b59b6; }
+    .div { color: #3498db; }
+    .error { color: #e74c3c; }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>Neon Glass Calculator</h2>
+        
+        <label for="num1">Number 1:</label>
+        <input type="number" id="num1" placeholder="Enter first number">
+
+        <label for="num2">Number 2:</label>
+        <input type="number" id="num2" placeholder="Enter second number">
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div id="output" class="output-box"></div>
+    </div>
+
+<script>
+function calculate() {
+    let num1 = parseFloat(document.getElementById("num1").value);
+    let num2 = parseFloat(document.getElementById("num2").value);
+    let outputDiv = document.getElementById("output");
+
+    if (isNaN(num1) || isNaN(num2)) {
+        outputDiv.innerHTML = "<span class='error'>⚠ Please enter valid numbers!</span>";
+        outputDiv.classList.add("visible");
+        return;
+    }
+
+    let multiplication = num1 * num2;
+    let division = (num2 !== 0) ? (num1 / num2) : "<span class='error'>❌ Division by zero not allowed!</span>";
+
+    outputDiv.innerHTML = `
+        <div class='mul'>✖ ${num1} × ${num2} = ${multiplication}</div>
+        <div class='div'>➗ ${num1} ÷ ${num2} = ${division}</div>
+    `;
+    outputDiv.classList.add("visible");
+}
+</script>
+</body>
+</html>
