@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reverse Words — Soft Glass Edition</title>
+<style>
+  :root{
+    --bg:#0a0f1a;
+    --panel:#0e1729cc;
+    --accent:#8ef7e3;
+    --accent-2:#93b5ff;
+    --accent-3:#f9baf8;
+    --text:#e8f2ff;
+    --muted:#9baccc;
+    --shadow: 0 6px 18px #0006;
+    --glow: 0 0 8px var(--accent), 0 0 20px var(--accent-2);
+  }
+
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:linear-gradient(180deg, #06090f, #0d1320);
+    color:var(--text);
+    font-family: system-ui, sans-serif;
+    display:grid;
+    place-items:center;
+    padding:24px;
+  }
+
+  .grid-overlay{
+    position:fixed; inset:0; pointer-events:none; opacity:.08; 
+    background:
+      repeating-linear-gradient(0deg, #93b5ff11 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(90deg, #8ef7e311 0 1px, transparent 1px 28px);
+  }
+
+  .card{
+    width:min(900px, 92vw);
+    background: linear-gradient(180deg, #0e172988, #0e172966) padding-box,
+                linear-gradient(135deg, #8ef7e333, #93b5ff33, #f9baf833) border-box;
+    border:1px solid transparent;
+    border-radius:16px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px) saturate(130%);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .card::before{
+    content:"";
+    position:absolute; inset:-2px;
+    border-radius:16px;
+    background: conic-gradient(from var(--a), #8ef7e3, #93b5ff, #f9baf8, #8ef7e3);
+    filter: blur(10px);
+    opacity:.15;
+    animation: spin 18s linear infinite;
+  }
+  @keyframes spin{to{--a:360deg}}
+
+  header{
+    padding:20px 20px 10px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .title{display:flex; gap:10px; align-items:center;}
+  .logo{
+    width:30px; height:30px; border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #8ef7e3 60%, transparent 70%);
+    box-shadow: var(--glow);
+  }
+  h1{
+    font-size: clamp(18px, 3.2vw, 24px);
+    margin:0;
+    text-shadow: 0 0 6px #93b5ff44;
+  }
+  .tag{
+    font-size:12px; color: var(--muted);
+    border:1px solid #93b5ff44; padding:3px 8px; border-radius:999px;
+    background:#0d1425aa;
+  }
+
+  .content{
+    display:grid; gap:14px;
+    padding:0 20px 20px;
+  }
+  .row{display:grid; gap:14px;}
+  @media(min-width: 800px){
+    .row{grid-template-columns: 1fr 1fr;}
+  }
+
+  label{font-size:13px; color:var(--muted); margin-left:4px}
+
+  textarea, .output{
+    width:100%; min-height:110px;
+    background:#0a1224; color:var(--text);
+    border:1px solid #24335a;
+    border-radius:10px;
+    padding:12px 12px 12px 40px;
+    resize:vertical;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  textarea:focus{
+    border-color:#93b5ff77;
+    box-shadow: 0 0 0 3px #93b5ff22;
+    outline:none;
+  }
+  .field{position:relative;}
+  .chip{
+    position:absolute; left:8px; top:8px;
+    font-size:11px; color:#cddcff;
+    border:1px solid #93b5ff44;
+    background:#0d1425bb; border-radius:999px;
+    padding:2px 6px;
+  }
+
+  .actions{
+    display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+  }
+  button{
+    cursor:pointer; border:none; border-radius:10px;
+    padding:10px 14px; font-weight:600;
+    background: linear-gradient(180deg, #10244a, #0c1a39);
+    color:var(--text);
+    border:1px solid #93b5ff44;
+    box-shadow: 0 4px 14px #0006;
+    transition:transform .08s ease, filter .15s ease;
+  }
+  button:hover{filter:brightness(1.05);}
+  button:active{transform:scale(.98);}
+
+  .footer{
+    border-top:1px dashed #25345c; margin-top:6px; padding:12px 20px;
+    font-size:12px; color:var(--muted);
+    display:flex; justify-content:space-between; flex-wrap:wrap;
+  }
+</style>
+</head>
+<body>
+<div class="grid-overlay"></div>
+
+<main class="card">
+  <header>
+    <div class="title">
+      <div class="logo"></div>
+      <h1>Reverse Words — Soft Glass Edition</h1>
+    </div>
+    <span class="tag">Word Mirror v1.0</span>
+  </header>
+
+  <section class="content">
+    <div class="row">
+      <div>
+        <label for="in">Input</label>
+        <div class="field">
+          <span class="chip">A → ɒ</span>
+          <textarea id="in" placeholder='Type here…'></textarea>
+        </div>
+      </div>
+      <div>
+        <label for="out">Output</label>
+        <div class="field">
+          <span class="chip">Mirror</span>
+          <div id="out" class="output"></div>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="btnReverse">Reverse</button>
+      <button id="btnSample">Sample</button>
+      <button id="btnCopy">Copy</button>
+      <button id="btnClear">Clear</button>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div>Tip: Works with spaces, tabs, and emojis ✨</div>
+    <div>Shortcuts: Ctrl/⌘+Enter reverse, Esc clear</div>
+  </div>
+</main>
+
+<script>
+function reverseWordsPreserveSpaces(str){
+  return str.split(/(\s+)/)
+            .map(token => /\s+/.test(token) ? token : Array.from(token).reverse().join(''))
+            .join('');
+}
+
+const $in = document.getElementById('in');
+const $out = document.getElementById('out');
+
+function setOutput(text){ $out.textContent = text; }
+function reverseNow(){ setOutput(reverseWordsPreserveSpaces($in.value)); }
+
+document.getElementById('btnReverse').onclick = reverseNow;
+document.getElementById('btnSample').onclick = () => {
+  $in.value = 'JavaScript is fun';
+  reverseNow();
+};
+document.getElementById('btnCopy').onclick = async () => {
+  try{ await navigator.clipboard.writeText($out.textContent); }catch{}
+};
+document.getElementById('btnClear').onclick = () => {
+  $in.value = ''; $out.textContent = '';
+};
+
+$in.addEventListener('input', reverseNow);
+document.addEventListener('keydown', e => {
+  if((e.ctrlKey||e.metaKey) && e.key==='Enter'){reverseNow();}
+  else if(e.key==='Escape'){$in.value=''; $out.textContent='';}
+});
+</script>
+</body>
+</html>

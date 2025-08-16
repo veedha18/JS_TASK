@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Count Vowels - Glassmorphism Style</title>
+<style>
+    /* Background Animation */
+    body {
+        margin: 0;
+        height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+        background-size: 800% 800%;
+        animation: gradientShift 12s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Glassmorphism Card */
+    .container {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 30px;
+        border-radius: 20px;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 350px;
+        color: white;
+        animation: fadeUp 1s ease-in-out;
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Input Box */
+    textarea {
+        width: 90%;
+        padding: 12px;
+        border: none;
+        outline: none;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        font-size: 16px;
+        resize: none;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    }
+
+    textarea::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Button */
+    button {
+        background: linear-gradient(135deg, #ff9966, #ff5e62);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 15px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 94, 98, 0.4);
+    }
+
+    button:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #ff5e62, #ff9966);
+    }
+
+    /* Output */
+    p {
+        font-size: 18px;
+        margin-top: 15px;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🔠 Count the Vowels</h2>
+    <textarea id="textInput" rows="3" placeholder="Type your sentence..."></textarea>
+    <br>
+    <button onclick="countVowels()">Count Vowels</button>
+    <p id="result"></p>
+</div>
+
+<script>
+function countVowels() {
+    let str = document.getElementById("textInput").value;
+    let matches = str.match(/[aeiouAEIOU]/g);
+    let count = matches ? matches.length : 0;
+    document.getElementById("result").innerText = `Vowel Count: ${count}`;
+}
+</script>
+
+</body>
+</html>
