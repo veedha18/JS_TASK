@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Validator — Notepad Theme</title>
+<style>
+  body {
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: 'Courier New', Courier, monospace;
+    background: #fefcf5; /* paper-like background */
+    background-image: repeating-linear-gradient(
+      to bottom,
+      #fefcf5,
+      #fefcf5 24px,
+      #e6e2d9 25px
+    ); /* subtle horizontal lines like notebook */
+    color: #333;
+  }
+
+  .container {
+    background: #fffde7;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    width: 380px;
+    border: 1px solid #e0d9b6;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: #5a4d3f;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #d6caa2;
+    border-radius: 6px;
+    outline: none;
+    font-size: 16px;
+    font-family: inherit;
+    background: #fffbe0;
+    margin-bottom: 15px;
+    transition: all 0.2s ease;
+  }
+
+  input:focus {
+    border-color: #a28f64;
+    box-shadow: 0 0 5px #a28f64;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: #a28f64;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.2s ease;
+  }
+
+  button:hover {
+    background: #8f7b50;
+    transform: translateY(-1px);
+  }
+
+  .output {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 15px;
+    min-height: 24px;
+  }
+
+  .output.valid {
+    color: #2e7d32;
+    font-weight: bold;
+  }
+
+  .output.invalid {
+    color: #c62828;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Email Validator</h2>
+  <input type="text" id="emailInput" placeholder="Enter your email">
+  <button onclick="validateEmail()">Validate</button>
+  <div class="output" id="result"></div>
+</div>
+
+<script>
+function validateEmail() {
+  const email = document.getElementById('emailInput').value.trim();
+  const result = document.getElementById('result');
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!email) {
+    result.textContent = "Email cannot be empty!";
+    result.className = "output invalid";
+    return;
+  }
+
+  if (!regex.test(email)) {
+    result.textContent = "Invalid email format.";
+    result.className = "output invalid";
+  } else {
+    result.textContent = `${email} is valid.`;
+    result.className = "output valid";
+  }
+}
+</script>
+</body>
+</html>

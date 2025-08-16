@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validate Name — Dark Neon Theme</title>
+  <style>
+    /* Root colors for Dark Neon */
+    :root {
+      --bg: #0d0d0d;
+      --panel: rgba(18,18,18,0.85);
+      --accent: #0ff;
+      --accent2: #f0f;
+      --text: #e0f7fa;
+      --error: #ff4c4c;
+      --shadow: 0 0 20px var(--accent);
+    }
+
+    /* Body and background */
+    body {
+      margin:0;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at 20% 20%, #0f0f0f, #070707);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* Container */
+    .container {
+      background: var(--panel);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 40px #0ff3, 0 0 60px #f03;
+      text-align: center;
+      width: 350px;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      font-size: 24px;
+      color: var(--accent);
+      text-shadow: 0 0 8px var(--accent), 0 0 15px var(--accent2);
+    }
+
+    input {
+      width: 90%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 25px;
+      border: 2px solid var(--accent2);
+      background: rgba(0,0,0,0.2);
+      color: var(--text);
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #0ff5 inset, 0 0 15px #f0f5 inset;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 0 0 25px var(--accent2) inset;
+    }
+
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px var(--accent), 0 0 40px var(--accent2);
+    }
+
+    .output {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 15px;
+      font-size: 16px;
+      min-height: 28px;
+      color: var(--text);
+      text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent2);
+      transition: all 0.3s ease;
+    }
+
+    .output.error {
+      color: var(--error);
+      text-shadow: 0 0 8px var(--error);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Validate Name</h2>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <br>
+    <button onclick="validateName()">Validate</button>
+    <div class="output" id="result"></div>
+  </div>
+
+  <script>
+    function validateName() {
+      const name = document.getElementById('nameInput').value.trim();
+      const result = document.getElementById('result');
+      const regex = /^[A-Za-z\s]+$/;
+
+      if(!name) {
+        result.textContent = "Name cannot be empty!";
+        result.classList.add('error');
+        return;
+      }
+
+      if(!regex.test(name)) {
+        result.textContent = "Name can only contain letters and spaces.";
+        result.classList.add('error');
+      } else {
+        result.textContent = `${name} is valid.`;
+        result.classList.remove('error');
+      }
+    }
+  </script>
+</body>
+</html>
